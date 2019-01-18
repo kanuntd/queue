@@ -26,8 +26,8 @@ test('สร้าง queue size 1 และ ทดสอบว่า เมื�
 // 5. สร้าง queue size 2 และ enqueue 1 และ 2 เข้าไป เมื่อ dequeue จะได้ ค่าเรียงลำดับเป็น 1 และ 2 เช่นกัน
 test('สร้าง queue size 2 และ enqueue 1 และ 2 เข้าไป เมื่อ dequeue จะได้ ค่าเรียงลำดับเป็น 1 และ 2 เช่นกัน', ()=>{
     const queue = new Queue(2);
-    expect(queue.enqueue(1));
-    expect(queue.enqueue(2));
+    queue.enqueue(1);
+    queue.enqueue(2);
     expect(queue.dequeue()).toBe(1);
     expect(queue.dequeue()).toBe(2);
 });
@@ -37,14 +37,21 @@ test('สร้าง queue size 1 และ dequeue เลย จะต้อ�
     expect(queue.dequeue()).toBe(null);
 });
 
-// // 7. Bug
-// test('สร้าง queue size 2 และ ทดสอบว่า enqueue เข้าไป 1 ตัว แล้ว full จะได้ค่า false ', ()=>{
-//     const queue = new Queue(3);
-//     expect(queue.enqueue(1));
-//     expect(queue.enqueue(2));
-//     expect(queue.enqueue(3));
-//     expect(queue.dequeue()).toBe(1);
-//     expect(queue.dequeue()).toBe(2);
-//     expect(queue.dequeue()).toBe(3);
-//     expect(queue.dequeue()).toBe(null);
-// });
+//7. Bug
+test('สร้าง queue size 2 และ enqueue 1 จากนั้น dequeue ออกมา และ enqueue 2 เข้าไป จะได้ ค่า tail เป็น 0 ', ()=>{
+    const queue = new Queue(2);
+    queue.enqueue(1);
+    queue.dequeue();
+    queue.enqueue(2);
+    expect(queue.tail).toBe(0);
+    
+});
+
+test('สร้าง queue size 2 และ enqueue 1 และ 2 จากนั้น dequeue ออกมา 2 ครั้ง จะได้ค่า head เป็น 0', ()=>{
+    const queue = new Queue(2);
+    queue.enqueue(1);
+    queue.enqueue(2);
+    queue.dequeue();
+    queue.dequeue();
+    expect(queue.head).toBe(0);
+});
